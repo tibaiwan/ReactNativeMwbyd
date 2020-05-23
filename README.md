@@ -5,7 +5,7 @@ npx react-native init ReactNativeMwbyd
 yarn android
 ```
 
-### React Navigatoin
+## React Navigatoin
 
 ```bash
 yarn add @react-navigation/native
@@ -19,6 +19,10 @@ yarn add react-native-reanimated react-native-gesture-handler react-native-scree
     - navigate
     - goBack
     - popToTop
+
+## 涉及NPM
+
+- `react-native-banner-carousel` banner
 
 ### See Also
 

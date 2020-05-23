@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   imageWrap: {
     width: 120,
-    marginBottom: 20,
+    marginBottom: 15,
     alignItems: 'center',
   },
   image: {
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   shopName: {
-    marginTop: 10,
+    marginTop: 5,
+    padding: 5,
     alignItems: 'center',
     textAlign: 'center',
   },

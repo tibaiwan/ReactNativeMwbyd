@@ -22,7 +22,7 @@ yarn add react-native-reanimated react-native-gesture-handler react-native-scree
 
 ## 涉及NPM
 
-- `react-native-banner-carousel` banner
+- `react-native-swiper` banner
 
 ### See Also
 

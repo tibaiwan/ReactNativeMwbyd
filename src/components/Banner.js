@@ -1,6 +1,6 @@
 import React from 'react';
-import Carousel from 'react-native-banner-carousel';
-import { StyleSheet, ImageBackground, View, Dimensions } from 'react-native';
+import Swiper from 'react-native-swiper'
+import { StyleSheet, ImageBackground, View, Dimensions, Text } from 'react-native';
 
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 140;
@@ -9,13 +9,13 @@ export const Banner = (props) => {
   const { banners } = props;
   return (
     <View style={styles.container}>
-      <Carousel
-        autoplay
-        autoplayTimeout={3000}
-        loop
-        index={0}
-        pageSize={BannerWidth}
-      >
+
+      <Swiper
+        style={styles.wrapper}
+        autoplay={true}
+        autoplayTimeout={3}
+        paginationStyle={{bottom: 2}}
+        activeDotColor={'red'}>
         {
           banners.map((image, index) => (
             <View key={index}>
@@ -23,7 +23,8 @@ export const Banner = (props) => {
             </View>
           ))
         }
-      </Carousel>
+      </Swiper>
+
     </View>
   )
 }

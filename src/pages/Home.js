@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Image, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { SafeAreaView, FlatList, Image, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { getHomepageBanner, getHotBrands, getShops } from '../api/service';
 import { Banner } from '../components/Banner';
 import { HotBrands } from '../components/HotBrands';
-import { ShopList } from '../components/ShopList';
+import { SubTitle } from '../components/SubTitle';
+import { ShopItem } from '../components/ShopItem';
+import { ListLoadStatus } from '../components/ListLoadStatus';
 
 const HomeStack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
 
+  const subTitle = '附近的餐厅';
   const [loading, setLoading] = useState(true)
+  const [pageInfo, setPageInfo] = useState({ page: 1, total: 20 })
+  const [hasMore, setHasMore] = useState(true)
   const [banners, setBanners] = useState([])
   const [brands, setBrands] = useState([])
   const [shops, setShops] = useState([])
@@ -23,19 +28,45 @@ function HomeScreen({ navigation }) {
       setBrands(brands);
       setShops(shopData.shops);
       setLoading(false);
+      setPageInfo(pageInfo => ({ page: pageInfo.page + 1, total: shopData.total }));
     })
   }, []);
+
+  handleReacheEnd = (params) => {
+    if (!hasMore) return;
+    getShops({page: pageInfo.page, latitude: 31.22024, longitude: 121.42394}).then(res => {
+      const shopData = res.shops;
+      const newShops = shops.concat(shopData);
+      setShops(newShops);
+      setPageInfo(pageInfo => ({ page: pageInfo.page + 1, total: res.total }));
+      if (newShops.length >= pageInfo.total) {
+        setHasMore(false);
+      }
+    });
+  }
+
+  renderListHeader = () => <>
+    <Banner banners={banners}/>
+    <HotBrands brands={brands}/>
+    <SubTitle title={subTitle} />
+  </>
+
+  renderListFooter = () => <ListLoadStatus hasMore={hasMore}/>
 
   return (
     <SafeAreaView style={styles.container}>
       {
         loading
         ? <ActivityIndicator size="large" color="#0000ff" />
-        : <ScrollView style={styles.scrollView}>
-            <Banner banners={banners}/>
-            <HotBrands brands={brands}/>
-            <ShopList shops={shops}/>
-          </ScrollView>
+        : <FlatList
+            ListHeaderComponent={renderListHeader}
+            ListFooterComponent={renderListFooter}
+            data={shops}
+            renderItem={({ item }) => <ShopItem shop={item} />}
+            keyExtractor={shop => String(shop.shopId)}
+            onEndReached={handleReacheEnd}
+            onEndReachedThreshold={0.1}
+          />
       }
     </SafeAreaView>
   );
@@ -72,6 +103,5 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: '#fff',
-    // marginHorizontal: 20,
   },
 });

@@ -12,9 +12,10 @@ export const SubTitle = props => {
 const styles = StyleSheet.create({
   subTitle: {
     width: '100%',
-    height: 50,
-    lineHeight: 50,
+    height: 60,
     paddingLeft: 10,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   subTitleText: {
     fontWeight: 'bold',

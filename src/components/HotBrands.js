@@ -26,6 +26,7 @@ export const HotBrands = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
   },
   brandWrap: {
     flexDirection: 'row',

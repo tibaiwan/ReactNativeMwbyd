@@ -33,6 +33,7 @@ function HomeScreen({ navigation }) {
   }, []);
 
   handleReacheEnd = (params) => {
+    console.log('handleReacheEnd', pageInfo);
     if (!hasMore) return;
     getShops({page: pageInfo.page, latitude: 31.22024, longitude: 121.42394}).then(res => {
       const shopData = res.shops;
@@ -63,7 +64,7 @@ function HomeScreen({ navigation }) {
             ListFooterComponent={renderListFooter}
             data={shops}
             renderItem={({ item }) => <ShopItem shop={item} />}
-            keyExtractor={shop => String(shop.shopId)}
+            keyExtractor={(shop, index) => String(index)}
             onEndReached={handleReacheEnd}
             onEndReachedThreshold={0.1}
           />

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   subTitle: {
     width: '100%',
     height: 60,
-    paddingLeft: 10,
+    paddingLeft: 15,
     justifyContent: 'center',
     backgroundColor: '#fff',
   },

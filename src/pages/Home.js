@@ -7,12 +7,15 @@ import { HotBrands } from '../components/HotBrands';
 import { SubTitle } from '../components/SubTitle';
 import { ShopItem } from '../components/ShopItem';
 import { ListLoadStatus } from '../components/ListLoadStatus';
+import { getLocation } from '../utils/util.location';
 
 const HomeStack = createStackNavigator();
+let locationInfo = {};
 
 function HomeScreen({ navigation }) {
 
   const subTitle = '附近的餐厅';
+  
   const [loading, setLoading] = useState(true)
   const [pageInfo, setPageInfo] = useState({ page: 1, total: 20 })
   const [hasMore, setHasMore] = useState(true)
@@ -21,29 +24,40 @@ function HomeScreen({ navigation }) {
   const [shops, setShops] = useState([])
 
   useEffect(() => {
-    Promise.all([getHomepageBanner(), getHotBrands(), getShops({latitude: 31.22024, longitude: 121.42394})]).then(res => {
+    Promise.all([getHomepageBanner(), getHotBrands()]).then(res => {
       console.log('useEffect res', res);
-      const [banners, brands, shopData] = res;
+      const [banners, brands] = res;
       setBanners(banners);
       setBrands(brands);
-      setShops(shopData.shops);
       setLoading(false);
-      setPageInfo(pageInfo => ({ page: pageInfo.page + 1, total: shopData.total }));
+    });
+    // 获取实时定位，加载附近餐厅
+    getLocation().then(location => {
+      locationInfo = { latitude: location.latitude, longitude: location.longitude };
+      fetchShopList();
     })
   }, []);
 
-  handleReacheEnd = (params) => {
-    console.log('handleReacheEnd', pageInfo);
-    if (!hasMore) return;
-    getShops({page: pageInfo.page, latitude: 31.22024, longitude: 121.42394}).then(res => {
+  useEffect(() => {
+    if (shops.length >= pageInfo.total) {
+      setHasMore(false);
+    }
+  }, [pageInfo.page]);
+
+  fetchShopList = () => {
+    const params = { page: pageInfo.page, pageSize: 20, ...locationInfo };
+    console.log('fetchShopList params', params);
+    getShops(params).then(res => {
       const shopData = res.shops;
       const newShops = shops.concat(shopData);
       setShops(newShops);
       setPageInfo(pageInfo => ({ page: pageInfo.page + 1, total: res.total }));
-      if (newShops.length >= pageInfo.total) {
-        setHasMore(false);
-      }
     });
+  }
+
+  handleReacheEnd = () => {
+    if (!hasMore) return;
+    fetchShopList();
   }
 
   renderListHeader = () => <>

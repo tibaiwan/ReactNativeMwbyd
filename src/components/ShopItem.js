@@ -45,7 +45,6 @@ const renderQueueItem = (shop) => {
   const { queueInfo: {status, total}, hotStatus } = shop;
   let leftInfo
   let rightInfo
-  console.log('hotTagBase64[hotStatus]', hotTagBase64[hotStatus]);
   switch (status) {
     case 1:
       leftInfo = '当前排队状况'

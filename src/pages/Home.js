@@ -7,7 +7,10 @@ import { HotBrands } from '../components/HotBrands';
 import { SubTitle } from '../components/SubTitle';
 import { ShopItem } from '../components/ShopItem';
 import { ListLoadStatus } from '../components/ListLoadStatus';
-import { getLocation } from '../utils/util.location';
+import { getCurrentPosition } from '../utils/util.location';
+import { storeData } from '../utils/util.storage';
+import { LOCATION_INFO } from '../constants/storeKey';
+import { ShopDetail } from './ShopDetail';
 
 const HomeStack = createStackNavigator();
 let locationInfo = {};
@@ -25,17 +28,18 @@ function HomeScreen({ navigation }) {
 
   useEffect(() => {
     Promise.all([getHomepageBanner(), getHotBrands()]).then(res => {
-      console.log('useEffect res', res);
+      // console.log('useEffect res', res);
       const [banners, brands] = res;
       setBanners(banners);
       setBrands(brands);
       setLoading(false);
     });
     // 获取实时定位，加载附近餐厅
-    getLocation().then(location => {
+    getCurrentPosition().then(location => {
       locationInfo = { latitude: location.latitude, longitude: location.longitude };
       fetchShopList();
-    })
+      storeData(LOCATION_INFO, locationInfo);
+    });
   }, []);
 
   useEffect(() => {
@@ -46,7 +50,7 @@ function HomeScreen({ navigation }) {
 
   fetchShopList = () => {
     const params = { page: pageInfo.page, pageSize: 20, ...locationInfo };
-    console.log('fetchShopList params', params);
+    // console.log('fetchShopList params', params);
     getShops(params).then(res => {
       const shopData = res.shops;
       const newShops = shops.concat(shopData);
@@ -77,7 +81,7 @@ function HomeScreen({ navigation }) {
             ListHeaderComponent={renderListHeader}
             ListFooterComponent={renderListFooter}
             data={shops}
-            renderItem={({ item }) => <ShopItem shop={item} />}
+            renderItem={({ item }) => <ShopItem shop={item} navigation={navigation} />}
             keyExtractor={(shop, index) => String(index)}
             onEndReached={handleReacheEnd}
             onEndReachedThreshold={0.1}
@@ -99,13 +103,24 @@ function LogoTitle() {
   );
 }
 
+const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
 export const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator initialRouteName="homepage">
       <HomeStack.Screen
-        name="首页"
-        component={HomeScreen} 
+        name="homepage"
+        component={HomeScreen}
         options={{ headerTitle: props => <LogoTitle {...props} /> }}
+      />
+      <HomeStack.Screen
+        name="shopdetail"
+        component={ShopDetail}
+        options={{ cardStyleInterpolator: forFade }}
       />
     </HomeStack.Navigator>
   );

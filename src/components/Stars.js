@@ -5,7 +5,7 @@ import { colorRed, colorLightGray } from '../config/color';
 
 export const Stars = props => {
   const maxNum = 5;
-  const size = 12;
+  const size = props.size || 12;
   let { avgReview } = props;
   if (avgReview > 5) avgReview = 5;
   if (avgReview < 0 || !avgReview) avgReview = 0;

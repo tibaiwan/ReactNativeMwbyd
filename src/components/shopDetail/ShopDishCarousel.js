@@ -1,25 +1,26 @@
 import React from 'react';
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
 import { StyleSheet, ImageBackground, View, Dimensions } from 'react-native';
 
 const BannerWidth = Dimensions.get('window').width;
-const BannerHeight = 140;
+const BannerHeight = 200;
 
-export const Banner = (props) => {
-  const { banners } = props;
+export const ShopDishCarousel = (props) => {
+
+  let { banner } = props;
+  banner = banner.length >= 6 ? banner.splice(0, 6) : banner;
+
   return (
     <View style={styles.container}>
 
       <Swiper
         style={styles.wrapper}
-        autoplay={true}
-        autoplayTimeout={3}
         paginationStyle={{bottom: 2}}
         activeDotColor={'red'}>
         {
-          banners.map((image, index) => (
+          banner.map((image, index) => (
             <View key={index}>
-              <ImageBackground style={styles.image} source={{ uri: image.picUrl}} />
+              <ImageBackground style={styles.image} source={{ uri: image}} />
             </View>
           ))
         }

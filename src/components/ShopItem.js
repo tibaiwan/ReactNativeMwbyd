@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground } from 'react-native';
+import { TouchableWithoutFeedback, View, Text, ImageBackground } from 'react-native';
 import { Stars } from './Stars';
 import { formatDistance } from '../utils/util.distance';
 import { styles } from './styles/StyleShopItem';
@@ -93,19 +93,21 @@ const renderReserveItem = (shop) => {
 }
 
 export const ShopItem = props => {
-  const { shop } = props;
+  const { shop, navigation } = props;
   return (
-    <View style={styles.container}>
-      <View style={styles.left}>
-        { renderLogo(shop.logo) }
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('shopdetail', { shopId: shop.shopId })}>
+      <View style={styles.container}>
+        <View style={styles.left}>
+          { renderLogo(shop.logo) }
+        </View>
+        <View style={styles.right}>
+          { renderShopName(shop.shopName) }
+          { renderStarAndPrice(shop) }
+          { renderDishTypeAndDistance(shop) }
+          { shop.judge.queue && renderQueueItem(shop) }
+          { shop.judge.book &&renderReserveItem(shop) }
+        </View>
       </View>
-      <View style={styles.right}>
-        { renderShopName(shop.shopName) }
-        { renderStarAndPrice(shop) }
-        { renderDishTypeAndDistance(shop) }
-        { shop.judge.queue && renderQueueItem(shop) }
-        { shop.judge.book &&renderReserveItem(shop) }
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }

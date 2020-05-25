@@ -5,8 +5,7 @@ import { StyleSheet, ImageBackground, View, Dimensions } from 'react-native';
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 140;
 
-export const Banner = (props) => {
-  const { banners } = props;
+export const Banner = ({ banners }) => {
   return (
     <View style={styles.container}>
 

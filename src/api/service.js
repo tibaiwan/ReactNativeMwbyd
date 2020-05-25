@@ -10,9 +10,14 @@ export const getHotBrands = async params => {
   return await post('/basic/app/hotbrands', params);
 }
 
-// 店铺列表
-export const getShops = async params => {
+// 附近店铺列表
+export const getNearShops = async params => {
   return await post('/basic/shops/baseQuery', params);
+}
+
+// 品牌列表
+export const getBrandList = async params => {
+  return await post('/basic/shops/baseQuery/branch', params);
 }
 
 // 店铺详情

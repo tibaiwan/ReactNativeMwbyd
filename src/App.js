@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStackScreen } from './pages/Home';
-import { MineStackScreen } from './pages/Mine';
+import { PersonCenterScreen } from './pages/PersonCenter';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { colorRed } from './config/color';
 
@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <Tab.Navigator initialRouteName="首页"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
 
@@ -25,7 +25,7 @@ export default function App() {
         }}
         >
         <Tab.Screen name="首页" component={HomeStackScreen} />
-        <Tab.Screen name="我的" component={MineStackScreen} />
+        <Tab.Screen name="我的" component={PersonCenterScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

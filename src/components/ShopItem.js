@@ -92,8 +92,7 @@ const renderReserveItem = (shop) => {
   )
 }
 
-export const ShopItem = props => {
-  const { shop, navigation } = props;
+export const ShopItem = ({ shop, navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => navigation.navigate('shopdetail', { shopId: shop.shopId })}>
       <View style={styles.container}>

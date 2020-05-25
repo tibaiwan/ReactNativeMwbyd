@@ -1,13 +1,15 @@
 import { baseUrl, cityId, fromw } from '../config/env';
 
 export const post = (url, params = {}) => {
+  const reqData = JSON.stringify(Object.assign({}, params, { cityId, fromw }));
+  console.log('reqData:', reqData);
   return fetch(`${baseUrl}${url}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(Object.assign({}, params, { cityId, fromw }))
+    body: reqData
   })
   .then(res => res.json())
   .then(json => {

@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { SubTitle } from './SubTitle';
 
-export const HotBrands = (props) => {
-  const { brands } = props;
+export const HotBrands = ({ brands, navigation }) => {
   const subTitle = '火爆餐厅';
   return (
     <View style={styles.container}>
@@ -11,12 +10,14 @@ export const HotBrands = (props) => {
       <View style={styles.brandWrap}>
         {
           brands.map((brand, index) => (
-            <View key={index} style={styles.imageWrap}>
-              <Image style={styles.image} source={{uri: brand.logo}}></Image>
-              <View style={styles.shopName}>
-                <Text style={styles.text}>{brand.shopName}</Text>
+            <TouchableWithoutFeedback key={index} onPress={() => navigation.navigate('brandlist', { mShopId: brand.manageShopId })}>
+              <View style={styles.imageWrap}>
+                <Image style={styles.image} source={{uri: brand.logo}}></Image>
+                <View style={styles.shopName}>
+                  <Text style={styles.text}>{brand.shopName}</Text>
+                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           ))
         }
       </View>

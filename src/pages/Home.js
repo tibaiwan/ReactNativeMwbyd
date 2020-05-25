@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, FlatList, Image, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { getHomepageBanner, getHotBrands, getShops } from '../api/service';
+import { getHomepageBanner, getHotBrands, getNearShops } from '../api/service';
 import { Banner } from '../components/Banner';
 import { HotBrands } from '../components/HotBrands';
 import { SubTitle } from '../components/SubTitle';
@@ -9,8 +9,10 @@ import { ShopItem } from '../components/ShopItem';
 import { ListLoadStatus } from '../components/ListLoadStatus';
 import { getCurrentPosition } from '../utils/util.location';
 import { storeData } from '../utils/util.storage';
+import { forFade } from '../utils/util.pageAnimation';
 import { LOCATION_INFO } from '../constants/storeKey';
 import { ShopDetail } from './ShopDetail';
+import { BrandList } from './BrandList';
 
 const HomeStack = createStackNavigator();
 let locationInfo = {};
@@ -19,12 +21,12 @@ function HomeScreen({ navigation }) {
 
   const subTitle = '附近的餐厅';
   
-  const [loading, setLoading] = useState(true)
-  const [pageInfo, setPageInfo] = useState({ page: 1, total: 20 })
-  const [hasMore, setHasMore] = useState(true)
-  const [banners, setBanners] = useState([])
-  const [brands, setBrands] = useState([])
-  const [shops, setShops] = useState([])
+  const [loading, setLoading] = useState(true);
+  const [pageInfo, setPageInfo] = useState({ page: 1, total: 20 });
+  const [hasMore, setHasMore] = useState(true);
+  const [banners, setBanners] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [shops, setShops] = useState([]);
 
   useEffect(() => {
     Promise.all([getHomepageBanner(), getHotBrands()]).then(res => {
@@ -51,7 +53,7 @@ function HomeScreen({ navigation }) {
   fetchShopList = () => {
     const params = { page: pageInfo.page, pageSize: 20, ...locationInfo };
     // console.log('fetchShopList params', params);
-    getShops(params).then(res => {
+    getNearShops(params).then(res => {
       const shopData = res.shops;
       const newShops = shops.concat(shopData);
       setShops(newShops);
@@ -66,7 +68,7 @@ function HomeScreen({ navigation }) {
 
   renderListHeader = () => <>
     <Banner banners={banners}/>
-    <HotBrands brands={brands}/>
+    <HotBrands brands={brands} navigation={navigation}/>
     <SubTitle title={subTitle} />
   </>
 
@@ -76,12 +78,12 @@ function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       {
         loading
-        ? <ActivityIndicator size="large" color="#0000ff" />
+        ? <ActivityIndicator size="large" color="#0000ff"/>
         : <FlatList
             ListHeaderComponent={renderListHeader}
             ListFooterComponent={renderListFooter}
             data={shops}
-            renderItem={({ item }) => <ShopItem shop={item} navigation={navigation} />}
+            renderItem={({ item }) => <ShopItem shop={item} navigation={navigation}/>}
             keyExtractor={(shop, index) => String(index)}
             onEndReached={handleReacheEnd}
             onEndReachedThreshold={0.1}
@@ -103,12 +105,6 @@ function LogoTitle() {
   );
 }
 
-const forFade = ({ current }) => ({
-  cardStyle: {
-    opacity: current.progress,
-  },
-});
-
 export const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator initialRouteName="homepage">
@@ -120,6 +116,11 @@ export const HomeStackScreen = () => {
       <HomeStack.Screen
         name="shopdetail"
         component={ShopDetail}
+        options={{ cardStyleInterpolator: forFade }}
+      />
+      <HomeStack.Screen
+        name="brandlist"
+        component={BrandList}
         options={{ cardStyleInterpolator: forFade }}
       />
     </HomeStack.Navigator>

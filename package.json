@@ -21,8 +21,10 @@
     "react-native": "0.62.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "^1.9.0",
+    "react-native-root-toast": "3.1.2",
     "react-native-safe-area-context": "^1.0.2",
     "react-native-screens": "^2.8.0",
+    "react-native-simple-toast": "^1.1.2",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^6.6.0"
   },

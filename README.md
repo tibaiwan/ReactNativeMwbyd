@@ -25,6 +25,7 @@ yarn add react-native-reanimated react-native-gesture-handler react-native-scree
 - `react-native-swiper` banner
 - `@react-native-community/geolocation` location
 - `@react-native-community/async-storage` storage
+- `react-native-root-toast` toast
 
 ### See Also
 

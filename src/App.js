@@ -14,7 +14,6 @@ export default function App() {
       <Tab.Navigator initialRouteName="首页"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-
             let iconName = route.name === '首页' ? 'ios-home' : 'md-person'
             return <Ionicons name={iconName} size={size} color={color} />;
           },

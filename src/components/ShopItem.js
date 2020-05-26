@@ -104,7 +104,7 @@ export const ShopItem = ({ shop, navigation }) => {
           { renderStarAndPrice(shop) }
           { renderDishTypeAndDistance(shop) }
           { shop.judge.queue && renderQueueItem(shop) }
-          { shop.judge.book &&renderReserveItem(shop) }
+          { shop.judge.book && renderReserveItem(shop) }
         </View>
       </View>
     </TouchableWithoutFeedback>

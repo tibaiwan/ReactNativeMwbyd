@@ -5119,6 +5119,22 @@ react-native-reanimated@^1.9.0:
   dependencies:
     fbjs "^1.0.0"
 
+react-native-root-siblings@^3.0.0:
+  version "3.2.3"
+  resolved "https://registry.npm.taobao.org/react-native-root-siblings/download/react-native-root-siblings-3.2.3.tgz?cache=0&sync_timestamp=1576148004113&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-root-siblings%2Fdownload%2Freact-native-root-siblings-3.2.3.tgz#df5a1cff3a3a1f433f57320e1cae719f1b15a3f2"
+  integrity sha1-31oc/zo6H0M/VzIOHK5xnxsVo/I=
+  dependencies:
+    prop-types "^15.6.2"
+    static-container "^1.0.0"
+
+react-native-root-toast@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npm.taobao.org/react-native-root-toast/download/react-native-root-toast-3.1.2.tgz#c8a1944f101c0768045202a276f46f9d710181a2"
+  integrity sha1-yKGUTxAcB2gEUgKidvRvnXEBgaI=
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-root-siblings "^3.0.0"
+
 react-native-safe-area-context@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/react-native-safe-area-context/download/react-native-safe-area-context-1.0.2.tgz#fe282bee7cb7245bd9ead6579cda9bbc704cd590"
@@ -5128,6 +5144,11 @@ react-native-screens@^2.8.0:
   version "2.8.0"
   resolved "https://registry.npm.taobao.org/react-native-screens/download/react-native-screens-2.8.0.tgz?cache=0&sync_timestamp=1590140627985&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-screens%2Fdownload%2Freact-native-screens-2.8.0.tgz#9f989096fc5ccf248e0dfa93a74f1a64057e15f1"
   integrity sha1-n5iQlvxczySODfqTp08aZAV+FfE=
+
+react-native-simple-toast@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npm.taobao.org/react-native-simple-toast/download/react-native-simple-toast-1.1.2.tgz#007de57e21986e811b4bbc2d3a6de949c0221df9"
+  integrity sha1-AH3lfiGYboEbS7wtOm3pScAiHfk=
 
 react-native-swiper@^1.6.0:
   version "1.6.0"
@@ -5826,6 +5847,11 @@ stacktrace-parser@^0.1.3:
   integrity sha1-KfsMrk4NC4UVWHlAKFehY562BRo=
   dependencies:
     type-fest "^0.7.1"
+
+static-container@^1.0.0:
+  version "1.5.1"
+  resolved "https://registry.npm.taobao.org/static-container/download/static-container-1.5.1.tgz#9d7a94e04dea864539a7b6a1304843ada740dc19"
+  integrity sha1-nXqU4E3qhkU5p7ahMEhDradA3Bk=
 
 static-extend@^0.1.1:
   version "0.1.2"

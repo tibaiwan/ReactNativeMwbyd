@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import Toast from 'react-native-root-toast';
-import { funcItems } from '../constants/personCenterConfig';
+import { funcItems } from '../../constants/personCenterConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colorGray, colorLightGray } from '../config/color';
+import { colorGray, colorLightGray } from '../../config/color';
 
 export const PersonCenterFuncItems = ({ navigation }) => {
 

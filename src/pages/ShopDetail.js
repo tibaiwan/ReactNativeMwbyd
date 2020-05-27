@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { getShopDetail } from '../api/service';
 import { ShopDishCarousel } from '../components/shopDetail/ShopDishCarousel';
 import { ShopLogoHeader } from '../components/shopDetail/ShopLogoHeader';
 import { ShopBaseInfo } from '../components/shopDetail/ShopBaseInfo';
+import { ShopQueueBox } from '../components/shopDetail/ShopQueueBox';
+import { ShopReserveBox } from '../components/shopDetail/ShopReserveBox';
 import { ShopTimeAddress } from '../components/shopDetail/ShopTimeAddress';
 
 export const ShopDetail = (props) => {
@@ -32,12 +34,14 @@ export const ShopDetail = (props) => {
   const { shopInfo } = shopData;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       { shopInfo.banner.length ? ShopDishCarousel(shopInfo) : ShopLogoHeader(shopInfo) }
       { renderShopName(shopInfo.shopName) }
       { ShopBaseInfo(shopInfo) }
       { ShopTimeAddress(shopInfo) }
-    </View>
+      { ShopQueueBox(shopInfo) }
+      { ShopReserveBox(shopInfo) }
+    </ScrollView>
   )
 }
 

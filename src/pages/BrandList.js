@@ -8,20 +8,25 @@ import { getData } from '../utils/util.storage';
 
 export const BrandList = (props) => {
   const { route: { params: { mShopId, mallId } }, navigation } = props;
-  
-  const locationInfo = getData(LOCATION_INFO);
-  const [loading, setLoading] = useState(true);
+  let locationInfo;
+
   const [shops, setShops] = useState([]);
   const [pageInfo, setPageInfo] = useState({ page: 1, total: 20 });
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    getBrandList({manageShopId: mShopId, mallId}).then(res => {
-      const shopData = res.shops;
-      const newShops = shops.concat(shopData);
-      setShops(newShops);
-      setPageInfo(pageInfo => ({ page: pageInfo.page + 1, total: res.total }));
-    });
+    getData(LOCATION_INFO).then(
+      res => {
+        locationInfo = res;
+        const params = { manageShopId: mShopId, mallId, page: pageInfo.page, pageSize: 20, ...locationInfo };
+        getBrandList(params).then(res => {
+          const shopData = res.shops;
+          const newShops = shops.concat(shopData);
+          setShops(newShops);
+          setPageInfo(pageInfo => ({ page: pageInfo.page + 1, total: res.total }));
+        });
+      }
+    );
   }, [mShopId]);
 
   useEffect(() => {
@@ -31,7 +36,7 @@ export const BrandList = (props) => {
   }, [pageInfo.page]);
 
   fetchShopList = () => {
-    const params = { page: pageInfo.page, pageSize: 20, ...locationInfo };
+    const params = { manageShopId: mShopId, mallId, page: pageInfo.page, pageSize: 20, ...locationInfo };
     getBrandList(params).then(res => {
       const shopData = res.shops;
       const newShops = shops.concat(shopData);

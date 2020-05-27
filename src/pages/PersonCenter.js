@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { PersonCenterHeader } from '../components/PersonCenterHeader';
-import { PersonCenterFuncItems } from '../components/PersonCenterFuncItems';
+import { PersonCenterHeader } from '../components/personCenter/PersonCenterHeader';
+import { PersonCenterFuncItems } from '../components/personCenter/PersonCenterFuncItems';
 
 const SettingsStack = createStackNavigator();
 

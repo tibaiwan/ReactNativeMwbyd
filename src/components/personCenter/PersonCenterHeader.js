@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 import Toast from 'react-native-root-toast';
-import { orderItems } from '../constants/personCenterConfig';
+import { orderItems } from '../../constants/personCenterConfig';
 
 export const PersonCenterHeader = () => {
 
@@ -14,7 +14,7 @@ export const PersonCenterHeader = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerTop}>
-        <Image style={styles.avatar} source={require('../assets/images/mw_logo.png')} />
+        <Image style={styles.avatar} source={require('../../assets/images/mw_logo.png')} />
         <Text style={styles.nickname}>美味不用等</Text>
       </View>
       <View style={styles.headerBottom}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { getShopDetail } from '../api/service';
+import { getDetailTransResult } from '../utils/util.formatQueueInfo';
 import { ShopDishCarousel } from '../components/shopDetail/ShopDishCarousel';
 import { ShopLogoHeader } from '../components/shopDetail/ShopLogoHeader';
 import { ShopBaseInfo } from '../components/shopDetail/ShopBaseInfo';
@@ -18,20 +19,22 @@ export const ShopDetail = (props) => {
 
   useEffect(() => {
     getShopDetail({ shopId }).then(res => {
-      setShopData(res);
+      setShopData(formatShopData(res));
       setLoading(false);
     });
   }, [shopId]);
 
+  const formatShopData = (shopData) => {
+    const { shopInfo, shopQueueInfo, buyNumDetail } = shopData;
+    shopData.queueStateTrans = getDetailTransResult(shopQueueInfo, buyNumDetail)
+    return shopData;
+  }
+
   // 店铺名称
   renderShopName = shopName => <View style={styles.shopName}><Text style={styles.shopNameText}>{shopName}</Text></View>
 
-  // 星级、菜系、人均信息
-
-
-  console.log('shopData', shopData);
   if (loading) return null
-  const { shopInfo } = shopData;
+  const { shopInfo, shopQueueInfo, queueStateTrans } = shopData;
 
   return (
     <ScrollView style={styles.container}>
@@ -39,7 +42,7 @@ export const ShopDetail = (props) => {
       { renderShopName(shopInfo.shopName) }
       { ShopBaseInfo(shopInfo) }
       { ShopTimeAddress(shopInfo) }
-      { ShopQueueBox(shopInfo) }
+      { ShopQueueBox(shopInfo, shopQueueInfo, queueStateTrans) }
       { ShopReserveBox(shopInfo) }
     </ScrollView>
   )
